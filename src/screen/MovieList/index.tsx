@@ -1,5 +1,11 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {ActivityIndicator, Image, Pressable, StyleSheet} from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  StyleSheet,
+  RefreshControl,
+} from 'react-native';
 import Container from '../../components/Container';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {getMovieList} from '../../redux/actions';
@@ -21,7 +27,11 @@ const MovieList = () => {
   const [loading, setLoading] = useState(false);
   const [movieList, setMovieList] = useState([]);
   const [shouldPaginate, setPaginate] = useState(false);
-  const {data = [], totalPage = 0} = useSelector(
+  const {
+    data = [],
+    totalPage = 0,
+    isLoading = false,
+  } = useSelector(
     ({MovieReducer}) => ({
       data: MovieReducer.data,
       isLoading: MovieReducer.isLoading,
@@ -65,11 +75,20 @@ const MovieList = () => {
     navigation.navigate('Search');
   }, [navigation]);
 
+  const _onRefresh = useCallback(() => {
+    dispatch(getMovieList(1));
+  }, [dispatch]);
+
+  const keyExtractor = useCallback(item => item.id, []);
+
   return (
     <Container>
       <FlashList
         data={movieList}
-        keyExtractor={item => item.id}
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={_onRefresh} />
+        }
+        keyExtractor={keyExtractor}
         showsVerticalScrollIndicator={false}
         renderItem={({item}) => <RenderMovieCard item={item} />}
         estimatedItemSize={200}
