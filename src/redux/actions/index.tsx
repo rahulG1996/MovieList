@@ -6,7 +6,7 @@ export const getMovieList = createAsyncThunk(
   async (page, {rejectWithValue}) => {
     try {
       const {data} = await axios.get(
-        'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
+        `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
         {
           headers: {
             accept: 'application/json',
@@ -16,7 +16,28 @@ export const getMovieList = createAsyncThunk(
         },
       );
 
-      return data?.results || [];
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  },
+);
+
+export const getSearchList = createAsyncThunk(
+  'user/searchList',
+  async (item, {rejectWithValue}) => {
+    try {
+      const {data} = await axios.get(
+        `https://api.themoviedb.org/3/search/movie?query=${item.key}&include_adult=false&language=en-US&page=${item.page}`,
+        {
+          headers: {
+            accept: 'application/json',
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5NTQzN2YzYmNjM2NlMjhiZGJkOWY3Y2Y3NGNmYzIwNSIsInN1YiI6IjY0ZGEwMzdmZDEwMGI2MDBlMjZhZGY2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bAG6mKtGsgjcpzFxBtUaEweJ6XjAaJRneFKJUDD8rfo',
+          },
+        },
+      );
+      return data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

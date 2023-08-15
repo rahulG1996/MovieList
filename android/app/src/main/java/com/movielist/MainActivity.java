@@ -12,11 +12,10 @@ public class MainActivity extends ReactActivity {
    * rendering of the component.
    */
 
-   @Override
+@Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(null);
   }
-
 
   @Override
   protected String getMainComponentName() {
