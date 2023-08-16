@@ -18,11 +18,11 @@ import {ListFooterComponent} from '../MovieList';
 import {AppDispatch} from '../../redux/store';
 
 export const Search = () => {
-  const [loading, setLoading] = useState(false);
-  const [movieList, setMovieList] = useState([]);
-  const [page, setPage] = useState(1);
-  const [searchKey, setSearchKey] = useState('');
-  const [shouldPaginate, setPaginate] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [movieList, setMovieList] = useState<object[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const [searchKey, setSearchKey] = useState<string>('');
+  const [shouldPaginate, setPaginate] = useState<boolean>(false);
   const navigation = useNavigation();
   const {searchData = [], totalPageSearch = 0} = useSelector(
     ({MovieReducer}) => ({

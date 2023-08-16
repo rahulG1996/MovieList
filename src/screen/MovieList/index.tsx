@@ -24,9 +24,9 @@ export const ListFooterComponent = ({loading = false}) => {
 
 const MovieList = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const [loading, setLoading] = useState(false);
-  const [movieList, setMovieList] = useState([]);
-  const [shouldPaginate, setPaginate] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [movieList, setMovieList] = useState<object[]>([]);
+  const [shouldPaginate, setPaginate] = useState<boolean>(false);
   const {
     data = [],
     totalPage = 0,
@@ -40,7 +40,7 @@ const MovieList = () => {
     shallowEqual,
   );
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
 
   const navigation = useNavigation();
 
